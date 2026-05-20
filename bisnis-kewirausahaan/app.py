@@ -1,7 +1,7 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="BisnisKu — Tools Kewirausahaan",
+    page_title="BisnisKu",
     page_icon="💡",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -96,7 +96,7 @@ p, li { color: rgba(255,255,255,0.75) !important; }
 # Hero Section
 st.markdown("""
 <div class="hero-card">
-    <div class="badge">🎓 Prodi S1 Kewirausahaan</div>
+    <div class="badge">🎓 Prodi S1 Kewirausahaan FEB UM Metro</div>
     <p class="hero-title">BisnisKu Tools</p>
     <p class="hero-sub">Platform simulasi keuangan & analisis business plan untuk mahasiswa kewirausahaan</p>
 </div>
