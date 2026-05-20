@@ -11,12 +11,16 @@ section[data-testid="stSidebar"] { background: rgba(255,255,255,0.04) !important
 section[data-testid="stSidebar"] * { color: #e0e0e0 !important; }
 h1,h2,h3 { color: white !important; }
 p, li, label { color: rgba(255,255,255,0.8) !important; }
-.stTextInput input, .stTextArea textarea, .stSelectbox select, .stNumberInput input {
-    background: rgba(255,255,255,0.08) !important;
-    color: white !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
+.stTextInput input, .stTextArea textarea, .stNumberInput input {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border: 1.5px solid rgba(255,255,255,0.35) !important;
     border-radius: 8px !important;
+    font-weight: 500 !important;
 }
+.stTextInput input::placeholder, .stTextArea textarea::placeholder { color: #888 !important; }
+div[data-baseweb="select"] > div { background: #ffffff !important; color: #111111 !important; border-radius: 8px !important; }
+div[data-baseweb="select"] span { color: #111111 !important; }
 .section-title {
     font-family: 'Syne', sans-serif;
     font-size: 1.4rem;
