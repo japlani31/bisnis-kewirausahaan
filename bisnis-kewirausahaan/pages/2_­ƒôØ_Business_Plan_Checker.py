@@ -20,6 +20,9 @@ p, li, label { color: rgba(255,255,255,0.8) !important; }
 }
 .stTextInput input::placeholder, .stTextArea textarea::placeholder { color: #888 !important; }
 div[data-baseweb="select"] > div { background: #ffffff !important; color: #111111 !important; border-radius: 8px !important; }
+div[data-baseweb="select"] * { color: #111111 !important; background-color: #ffffff !important; }
+div[data-baseweb="popover"] li { color: #111111 !important; background: #ffffff !important; }
+div[data-baseweb="popover"] li:hover { background: #f0f0f0 !important; }
 div[data-baseweb="select"] span { color: #111111 !important; }
 .section-title {
     font-family: 'Syne', sans-serif;

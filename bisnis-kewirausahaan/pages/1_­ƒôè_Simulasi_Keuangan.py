@@ -29,6 +29,9 @@ p, li, label { color: rgba(255,255,255,0.8) !important; }
 .stTextInput input::placeholder,
 .stTextArea textarea::placeholder { color: #888 !important; }
 div[data-baseweb="select"] > div { background: #ffffff !important; color: #111111 !important; border-radius: 8px !important; }
+div[data-baseweb="select"] * { color: #111111 !important; background-color: #ffffff !important; }
+div[data-baseweb="popover"] li { color: #111111 !important; background: #ffffff !important; }
+div[data-baseweb="popover"] li:hover { background: #f0f0f0 !important; }
 div[data-baseweb="select"] span { color: #111111 !important; }
 
 .metric-card {
@@ -97,7 +100,8 @@ with col1:
     jenis_bisnis = st.selectbox("Jenis Bisnis", ["Kuliner/F&B","Fashion/Pakaian","Jasa/Servis","Teknologi/Digital","Pendidikan","Retail/Toko","Lainnya"])
 with col2:
     modal_awal = st.number_input("Modal Awal / Investasi (Rp)", min_value=0, value=50000000, step=1000000, format="%d")
-    periode = st.selectbox("Periode Proyeksi", ["6 Bulan","12 Bulan","24 Bulan","60 Bulan (5 Tahun)"])
+    pilihan_periode = [f"{i} Bulan" for i in range(1, 61)]
+    periode = st.selectbox("Periode Proyeksi", pilihan_periode, index=11)
 
 st.markdown('<div class="section-title">2️⃣ HPP — Harga Pokok Produksi</div>', unsafe_allow_html=True)
 st.markdown('<p style="font-size:0.85rem;color:rgba(255,255,255,0.5)">Rincian komponen biaya untuk membuat satu unit produk/jasa</p>', unsafe_allow_html=True)
@@ -179,7 +183,7 @@ if st.button("🚀 Hitung Analisis Lengkap!"):
     payback = (modal_awal / laba_bersih) if laba_bersih > 0 else 999
 
     # ─── PROYEKSI CASHFLOW ───────────────────────────────────────
-    bulan_map = {"6 Bulan":6,"12 Bulan":12,"24 Bulan":24,"60 Bulan (5 Tahun)":60}
+    bulan_map = {f"{i} Bulan": i for i in range(1, 61)}
     n_bulan = bulan_map[periode]
     r_monthly = discount_rate / 100 / 12
 
