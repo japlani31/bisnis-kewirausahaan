@@ -97,7 +97,7 @@ p, li { color: rgba(255,255,255,0.75) !important; }
 st.markdown("""
 <div class="hero-card">
     <div class="badge">🎓 Prodi S1 Kewirausahaan FEB UM Metro</div>
-    <p class="hero-title">BisnisKu Tools</p>
+    <p class="hero-title">BisnisKu</p>
     <p class="hero-sub">Platform simulasi keuangan & analisis business plan untuk mahasiswa kewirausahaan</p>
 </div>
 """, unsafe_allow_html=True)
@@ -138,6 +138,6 @@ border-radius: 12px; padding: 1rem 1.5rem;">
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("""
 <div style="text-align:center; color: rgba(255,255,255,0.3); font-size:0.8rem; border-top: 1px solid rgba(255,255,255,0.08); padding-top:1rem">
-    BisnisKu Tools · Prodi S1 Kewirausahaan · UM Metro
+    BisnisKu · Prodi S1 Kewirausahaan · FEB UM Metro
 </div>
 """, unsafe_allow_html=True)
