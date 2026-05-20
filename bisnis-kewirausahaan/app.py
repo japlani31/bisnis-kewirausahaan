@@ -83,6 +83,12 @@ section[data-testid="stSidebar"] * {
 }
 
 h1, h2, h3 { color: white !important; }
+.stTextInput input, .stNumberInput input, .stTextArea textarea {
+    background: #ffffff !important; color: #111111 !important;
+    border: 1.5px solid rgba(255,255,255,0.35) !important; border-radius: 8px !important;
+}
+div[data-baseweb="select"] > div { background: #ffffff !important; color: #111111 !important; border-radius: 8px !important; }
+div[data-baseweb="select"] span { color: #111111 !important; }
 p, li { color: rgba(255,255,255,0.75) !important; }
 </style>
 """, unsafe_allow_html=True)
