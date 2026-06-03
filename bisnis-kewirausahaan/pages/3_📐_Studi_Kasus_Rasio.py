@@ -546,3 +546,71 @@ if st.button("🔍  Analisis Perbandingan Rasio"):
             bc[3].markdown(f'<p class="bench-row-bad">{bad}</p>', unsafe_allow_html=True)
             bc[4].markdown(f'<p class="bench-row-note">{meaning}</p>', unsafe_allow_html=True)
             st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
+
+    # ── PDF EXPORT ────────────────────────────────────────────────
+    st.markdown("---")
+    st.markdown('<p style="font-size:0.82rem;color:#3a5870 !important;margin-bottom:0.5rem">📄 Unduh laporan perbandingan rasio dalam format PDF.</p>', unsafe_allow_html=True)
+
+    def _buat_pdf_rasio():
+        import sys, os; sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+        from utils import BisnisKuPDF
+        import datetime
+        pdf = BisnisKuPDF(f"Perbandingan Rasio Keuangan — {biz_name}")
+        pdf.add_page()
+
+        pdf.section("Informasi Analisis")
+        pdf.kv("Nama Bisnis / Studi Kasus", biz_name)
+        pdf.kv("Periode 1", str(label1))
+        pdf.kv("Periode 2", str(label2))
+        pdf.kv("Tanggal Cetak", datetime.datetime.now().strftime("%d %B %Y %H:%M"))
+
+        RASIO_KEYS = [k for k in r1 if k != "label"]
+        KATEGORI = {
+            "Profitabilitas": ["Gross Margin (%)", "Net Profit Margin (%)", "ROA (%)", "ROE (%)"],
+            "Likuiditas":     ["Current Ratio (x)", "Quick Ratio (x)"],
+            "Solvabilitas":   ["Debt to Equity (x)", "Debt Ratio"],
+            "Aktivitas":      ["Asset Turnover (x)", "Inventory Turnover (x)", "DSO (hari)"],
+        }
+        lo_better = {"Debt to Equity (x)", "Debt Ratio", "DSO (hari)"}
+
+        for kat, keys in KATEGORI.items():
+            pdf.section(kat)
+            pdf.th([f"Rasio", str(label1), str(label2), "Delta %", "Tren"], [60, 32, 32, 24, 34])
+            for i, k in enumerate(keys):
+                v1, v2 = r1.get(k, 0), r2.get(k, 0)
+                delta = v2 - v1
+                dpct  = delta / abs(v1) * 100 if v1 != 0 else 0
+                lower = k in lo_better
+                good  = (delta < 0) if lower else (delta >= 0)
+                sym   = "+" if delta >= 0 else ""
+                trend = "Membaik" if good else "Menurun"
+                fmt   = ".1f" if "%" in k or "x)" in k else ".2f"
+                pdf.tr([k, f"{v1:{fmt}}", f"{v2:{fmt}}", f"{sym}{dpct:.1f}%", trend],
+                        [60, 32, 32, 24, 34], even=i%2==0)
+
+        pdf.section("Acuan Benchmark UMKM (Kisaran Umum)")
+        pdf.th(["Rasio","Baik","Cukup","Waspada"],[60,40,40,42])
+        bench_data = [
+            ("Gross Margin",      ">=20%","10-20%","<10%"),
+            ("Net Profit Margin", ">=15%","5-15%","<5%"),
+            ("ROA",               ">=10%","5-10%","<5%"),
+            ("ROE",               ">=15%","8-15%","<8%"),
+            ("Current Ratio",     ">=2x","1-2x","<1x"),
+            ("Quick Ratio",       ">=1x","0.7-1x","<0.7x"),
+            ("Debt to Equity",    "<=1x","1-2x",">2x"),
+            ("Debt Ratio",        "<=0.5","0.5-0.7",">0.7"),
+            ("DSO",               "<=30 hr","30-60 hr",">60 hr"),
+        ]
+        for i,(a,b,c,d) in enumerate(bench_data):
+            pdf.tr([a,b,c,d],[60,40,40,42],even=i%2==0)
+        pdf.note("Benchmark adalah kisaran umum UMKM. Nilai ideal bervariasi per industri dan skala bisnis.")
+        return pdf.build()
+
+    import datetime as _dt
+    fname_r = f"BisnisKu_Rasio_{biz_name.replace(' ','_')}_{_dt.date.today()}.pdf"
+    st.download_button(
+        label="📄 Unduh Laporan Perbandingan Rasio (PDF)",
+        data=_buat_pdf_rasio(),
+        file_name=fname_r,
+        mime="application/pdf",
+    )
